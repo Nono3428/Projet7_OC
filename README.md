@@ -26,7 +26,6 @@ https://git-scm.com/
     ```
     cd Projet7_OC
     ```
-
 Pour utiliser ce projet, vous devez configurer l'API qui sert de backend :
 
 1. Créez un environnement virtuel pour le projet :
@@ -56,7 +55,7 @@ Pour utiliser ce projet, vous devez configurer l'API qui sert de backend :
 ##  Changer le fichier de données 
 Si vous souhaitez tester le programme avec une autre liste d’actions, remplacez simplement le nom du fichier dans le code.
 
-📍 Étape à suivre :
+Étape à suivre :
 1. Ajoutez votre nouveau fichier CSV dans le dossier du projet.
 
 2. Ouvrez le fichier Python (brute_force.py ou optimized.py).
