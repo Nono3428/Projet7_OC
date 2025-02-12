@@ -6,12 +6,19 @@ def read_actions(filename):
     with open(filename, newline='', encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            action = {
-                'name': row['Actions #'],
-                'cost': int(row['Coût par action (en euros)']),
-                'profit_percent': float(row['Bénéfice (après 2 ans)'].strip('%'))
-            }
-            actions.append(action)
+            try:
+                price = float(row['price'])
+                profit_percent = float(row['profit'])
+                
+                if price > 0:
+                    action = {
+                        'name': row['name'],
+                        'cost': int(price * 100),
+                        'profit_percent': profit_percent
+                    }
+                    actions.append(action)
+            except ValueError:
+                continue
     return actions
 
 def calculate_profit(combination):
@@ -23,15 +30,12 @@ def calculate_profit(combination):
 
 def find_best_investment_recursive(actions, index=0, current_combination=[], best_combination=[], best_profit=0, budget=500):
     """Fonction récursive pour explorer toutes les combinaisons possibles et trouver le meilleur investissement."""
-    
-    # Calcul du coût actuel de la combinaison
     total_cost = sum(action['cost'] for action in current_combination)
 
     # Si le coût dépasse le budget, on arrête cette branche de recherche
-    if total_cost > budget:
+    if total_cost > budget * 100:
         return best_combination, best_profit
 
-    # Calcul du profit actuel
     current_profit = calculate_profit(current_combination)
 
     # Si on trouve une meilleure combinaison, on la sauvegarde
@@ -39,34 +43,29 @@ def find_best_investment_recursive(actions, index=0, current_combination=[], bes
         best_combination = list(current_combination)
         best_profit = current_profit
 
-    # Si on a exploré toutes les actions, on retourne la meilleure combinaison trouvée
     if index >= len(actions):
         return best_combination, best_profit
 
-    # 1️⃣ Cas où on **n'ajoute pas** l'action actuelle et on passe à la suivante
+    # Cas où on **n'ajoute pas** l'action actuelle et on passe à la suivante
     best_combination, best_profit = find_best_investment_recursive(
         actions, index + 1, current_combination, best_combination, best_profit, budget
     )
 
-    # 2️⃣ Cas où on **ajoute** l'action actuelle et on continue la recherche
+    # Cas où on **ajoute** l'action actuelle et on continue la recherche
     current_combination.append(actions[index])
     best_combination, best_profit = find_best_investment_recursive(
         actions, index + 1, current_combination, best_combination, best_profit, budget
     )
-
     # Retirer l'élément ajouté pour revenir à l'état précédent (backtracking)
     current_combination.pop()
 
     return best_combination, best_profit
 
-# Charger les actions depuis le fichier CSV
-filename = 'actions.csv'  # Assurez-vous que le fichier CSV est bien dans le bon chemin
-actions = read_actions(filename)
+dataset = 'dataset1.csv'
+actions = read_actions(dataset)
 
-# Trouver la meilleure combinaison d'investissement avec la version brute-force sans itertools
 best_combination, best_profit = find_best_investment_recursive(actions)
 
-# Affichage du résultat
 print(f"Meilleur investissement : {[action['name'] for action in best_combination]}")
-print(f"Coût total : {sum(action['cost'] for action in best_combination)} €")
+print(f"Coût total : {sum(action['cost'] for action in best_combination) / 100} €")
 print(f"Profit total : {best_profit} €")
