@@ -65,5 +65,5 @@ def find_best_investment(filename, budget=500):
     
     return best_profit, selected_actions, total_cost
 
-dataset = 'dataset2.csv'
+dataset = 'data/dataset1.csv'
 find_best_investment(dataset)

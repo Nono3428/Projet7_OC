@@ -56,11 +56,11 @@ Pour utiliser ce projet, vous devez configurer l'API qui sert de backend :
 Si vous souhaitez tester le programme avec une autre liste d’actions, remplacez simplement le nom du fichier dans le code.
 
 Étape à suivre :
-1. Ajoutez votre nouveau fichier CSV dans le dossier du projet.
+1. Ajoutez votre nouveau fichier CSV dans le dossier 'data' du projet.
 
 2. Ouvrez le fichier Python (brute_force.py ou optimized.py).
 
-3. Modifiez cette ligne en remplaçant "dataset.csv" par le nom de votre nouveau fichier :
+3. Modifiez cette ligne en remplaçant "dataset1.csv" par le nom de votre nouveau fichier :
 
-**dataset = "mon_nouveau_fichier.csv"**
+**dataset = "data/mon_nouveau_fichier.csv"**
 ---

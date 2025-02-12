@@ -61,7 +61,7 @@ def find_best_investment_recursive(actions, index=0, current_combination=[], bes
 
     return best_combination, best_profit
 
-dataset = 'dataset1.csv'
+dataset = 'data/dataset1.csv'
 actions = read_actions(dataset)
 
 best_combination, best_profit = find_best_investment_recursive(actions)
